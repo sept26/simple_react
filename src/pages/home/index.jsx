@@ -1,8 +1,9 @@
 import React, {Component} from 'react'
 // import { Link } from 'react-router-dom'
-// import { connect } from 'react-redux'
+import { connect } from 'react-redux'
+import { saveFormData, saveImage, clearData } from '@/store/home/action'
 // import { is, fromJS} from 'immutable'
-// import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
 // import API from './../../api/api'
 // import envconfig from './../../envconfig/envconfig';
 import Header from './../../components/header'
@@ -12,9 +13,14 @@ class Home extends Component {
     super(props);
     this.state = {  };
   }
-  // static propTypes = {
-    // formData: PropTypes.object.isRequired
-  // }
+  static propTypes = {
+    formData: PropTypes.object.isRequired
+  }
+
+  handleInput = (type, event) => {
+    
+  }
+
   render() {
     return (
       <div className="home-container">
@@ -23,7 +29,7 @@ class Home extends Component {
         <form className="form-group">
           <div>
             <label>销售金额</label>
-            <input type="text" placeholder="请输入订单金额"/>
+            <input type="text" placeholder="请输入订单金额" value={this.props.formData.orderSum} onChange={this.handleInput.bind(this, 'orderSum')}/>
           </div>
           <div>
             <label>客户姓名</label>
@@ -39,4 +45,11 @@ class Home extends Component {
   }
 }
 
-export default Home
+export default connect(state => ({
+  formData: state.formData,
+}),{
+  saveFormData,
+  saveImage,
+  clearData
+}
+)(Home)
