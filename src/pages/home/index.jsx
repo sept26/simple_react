@@ -12,10 +12,28 @@ class Home extends Component {
     super(props);
     this.state = {  };
   }
+  // static propTypes = {
+    // formData: PropTypes.object.isRequired
+  // }
   render() {
     return (
-      <div>
+      <div className="home-container">
         <Header title="首页" record/>
+        <p className="person-info">请输入您的信息</p>
+        <form className="form-group">
+          <div>
+            <label>销售金额</label>
+            <input type="text" placeholder="请输入订单金额"/>
+          </div>
+          <div>
+            <label>客户姓名</label>
+            <input type="text" placeholder="请输入客户姓名"/>
+          </div>
+          <div>
+            <label>客户电话</label>
+            <input type="text" placeholder="请输入客户电话"/>
+          </div>
+        </form>
       </div>
     );
   }
