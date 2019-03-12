@@ -1,0 +1,30 @@
+*{
+  margin: 0;
+  padding: 0;
+  /*防止点击闪烁*/
+  -webkit-tap-highlight-color: transparent;
+  /*缩放网页，文字大小不变*/
+  -webkit-text-size-adjust: none;
+  font-family: "Helvetica Neue",Helvetica,STHeiTi,sans-serif;
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
+  font-weight: normal;
+}
+body{
+  font-size: 14px;
+}
+html, body {
+  height: 100%
+}
+[class^="icon-"], [class*=" icon-"] {
+  font-family:"iconfont";
+  font-size:16px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+a{
+  text-decoration: none;
+  /*ios禁止页面在新窗口打开*/
+  -webkit-touch-callout:none;
+}
