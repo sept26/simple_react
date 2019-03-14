@@ -19,7 +19,20 @@ class Home extends Component {
   }
 
   handleInput = (type, event) => {
-    
+    let value = event.target.value
+    switch(type) {
+      case 'orderSum':
+        value = value.replace(/\D/g,'')
+      break;
+      case 'name':
+      break
+      case 'phoneNo':
+        // 这地方的问题
+        // value = this.padStr(value.replace(/\D/g, ''), [3, 7], ' ', event.target);
+        value = value.replace(/\D/g,'')
+      break;
+      default:;
+    }
   }
 
   render() {
@@ -47,8 +60,15 @@ class Home extends Component {
             选择产品
           </Link>
         </div>
+        <div className="upload-img">
+          <p>请上传发票凭据</p>
+          <div className="file-label">
+            <span>上传图片</span>
+            <input type="file"  onChange={this.uploadFile} />
+          </div>
+        </div>
       </div>
-    );
+    )
   }
 }
 
