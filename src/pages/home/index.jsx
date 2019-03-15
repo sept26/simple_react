@@ -25,7 +25,6 @@ class Home extends Component {
 
   componentWillReceiveProps(nextProps) {
     // 两个对象的hashCode相等，值就是相同的，避免了深度遍历，提高了性能
-    debugger
     if(!is(fromJS(this.props.proData),fromJS(nextProps.proData))) {
       this.initData(nextProps)
     }
