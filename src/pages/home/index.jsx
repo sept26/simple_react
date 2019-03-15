@@ -4,10 +4,11 @@ import { connect } from 'react-redux'
 import { saveFormData, saveImage, clearData } from '@/store/home/action'
 import { is, fromJS} from 'immutable'
 import PropTypes from 'prop-types'
-// import API from './../../api/api'
-// import envconfig from './../../envconfig/envconfig';
+import API from './../../api/api'
+import envconfig from './../../envconfig/envconfig';
 import Header from './../../components/header'
 import './home.less'
+require("babel-polyfill")
 
 class Home extends Component {
   constructor(props) {
@@ -60,6 +61,18 @@ class Home extends Component {
     }
   }
 
+  // 上传图片
+  uploadFile = async event => {
+    try {
+      let formdata = new FormData()
+      formdata.append('file', event.target.files[0])
+      let result = await API.uploadImg({data: formdata})
+      this.props.saveImage(envconfig.imgUrl + result.image_path)
+    } catch(err) {
+      console.log(err)
+    }
+  }
+
   render() {
     return (
       <div className="home-container">
@@ -101,6 +114,7 @@ class Home extends Component {
             <span>上传图片</span>
             <input type="file"  onChange={this.uploadFile} />
           </div>
+          {this.props.formData.imgPath && <img src={this.props.formData.imgPath} className="select-img"/>}
         </div>
       </div>
     )

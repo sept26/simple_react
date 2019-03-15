@@ -13,7 +13,7 @@ export const formData = (state = defaultState,  action = {}) => {
     case home.SAVEFORMDATA:
       return {...state, ...{[action.datatype]:action.value}}
     case home.SAVEIMAGE:
-      return {...state, ...{imgpath: action.path}}
+      return {...state, ...{imgPath: action.path}}
     case home.CLEARDATA:
       return {...state, ... defaultState}
     default:
