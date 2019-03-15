@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { saveFormData, saveImage, clearData } from '@/store/home/action'
-// import { is, fromJS} from 'immutable'
+import { is, fromJS} from 'immutable'
 import PropTypes from 'prop-types'
 // import API from './../../api/api'
 // import envconfig from './../../envconfig/envconfig';
@@ -15,7 +15,33 @@ class Home extends Component {
     this.state = {  };
   }
   static propTypes = {
-    formData: PropTypes.object.isRequired
+    formData: PropTypes.object.isRequired,
+    saveFormData: PropTypes.func.isRequired,
+    saveImage: PropTypes.func.isRequired,
+    clearData: PropTypes.func.isRequired
+  }
+
+  selectedProList = []
+
+  componentWillReceiveProps(nextProps) {
+    // 两个对象的hashCode相等，值就是相同的，避免了深度遍历，提高了性能
+    debugger
+    if(!is(fromJS(this.props.proData),fromJS(nextProps.proData))) {
+      this.initData(nextProps)
+    }
+  }
+
+  componentWillMount(){
+    this.initData(this.props);
+  }
+
+  initData = props => {
+    this.selectedProList = []
+    props.proData.dataList.forEach(item => {
+      if(item.selectStatus && item.selectNum) {
+        this.selectedProList.push(item)
+      }
+    })
   }
 
   handleInput = (type, event) => {
@@ -57,7 +83,17 @@ class Home extends Component {
         <div className="select-product">
           <p>请选择销售的产品</p>
           <Link to="/production" className="common-select">
-            选择产品
+            {
+              this.selectedProList.length ? <ul className="selected-pro">
+                {
+                  this.selectedProList.map((item,index) => {
+                    return (<li key={index}>
+                      {item.product_name}x{item.selectNum}
+                    </li>)
+                  })
+                }
+              </ul>:'选择产品'
+            }
           </Link>
         </div>
         <div className="upload-img">
@@ -74,6 +110,7 @@ class Home extends Component {
 
 export default connect(state => ({
   formData: state.formData,
+  proData: state.proData
 }),{
   saveFormData,
   saveImage,

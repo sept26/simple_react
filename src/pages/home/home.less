@@ -39,7 +39,7 @@
       display: inline-block;
       background-color: #fff;
       width: 100%;
-      height: .667rem;
+      min-height: .667rem;
       line-height: .667rem;
       text-align: center;
       color: #ccc;
@@ -68,6 +68,16 @@
       input {
         display: none;
       }
+    }
+  }
+  .selected-pro {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    list-style: none;
+    li {
+      width: 50%;
+      text-align: center;
     }
   }
 }
