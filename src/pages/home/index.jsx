@@ -2,24 +2,31 @@ import React, {Component} from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { saveFormData, saveImage, clearData } from '@/store/home/action'
+import { clearSelect } from '@/store/production/action'
 import { is, fromJS} from 'immutable'
 import PropTypes from 'prop-types'
 import API from './../../api/api'
 import envconfig from './../../envconfig/envconfig';
 import Header from './../../components/header'
 import './home.less'
+import TouchableOpacity from '@/components/touchableOpacity'
+import Alert from '@/components/alert'
 require("babel-polyfill")
 
 class Home extends Component {
   constructor(props) {
-    super(props);
-    this.state = {  };
+    super(props)
+    this.state = { 
+      alertStatus: false,
+      alertTip: ''
+     }
   }
   static propTypes = {
     formData: PropTypes.object.isRequired,
     saveFormData: PropTypes.func.isRequired,
     saveImage: PropTypes.func.isRequired,
-    clearData: PropTypes.func.isRequired
+    clearData: PropTypes.func.isRequired,
+    clearSelect: PropTypes.func.isRequired
   }
 
   selectedProList = []
@@ -33,6 +40,10 @@ class Home extends Component {
 
   componentWillMount(){
     this.initData(this.props);
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return !is(fromJS(this.props), fromJS(nextProps)) || !is(fromJS(this.state),fromJS(nextState))
   }
 
   initData = props => {
@@ -59,6 +70,7 @@ class Home extends Component {
       break;
       default:;
     }
+    this.props.saveFormData(value, type);
   }
 
   // 上传图片
@@ -71,6 +83,39 @@ class Home extends Component {
     } catch(err) {
       console.log(err)
     }
+  }
+
+  // 提交
+  sumitForm = () => {
+    const {orderSum, name, phoneNo} = this.props.formData
+    let alertTip = ''
+    if (!String(orderSum).length) {
+      alertTip = '请填写金额'
+    } else if(!String(name).length) {
+      alertTip = '请填写姓名'
+    } else if(!String(phoneNo).length) {
+      alertTip = '请填写手机号'
+    } else {
+      alertTip = '添加数据成功'
+      this.props.clearSelect()
+      this.props.clearData()
+    }
+    this.setState(() => {
+      return {
+        alertStatus: true,
+        alertTip
+      }
+    })
+  }
+
+  // 关闭弹框
+  closePop = () => {
+    this.setState(() => {
+      return {
+        alertStatus: false,
+        alertTip: ''
+      }
+    })
   }
 
   render() {
@@ -116,6 +161,8 @@ class Home extends Component {
           </div>
           {this.props.formData.imgPath && <img src={this.props.formData.imgPath} className="select-img"/>}
         </div>
+        <TouchableOpacity className="submit-btn" clickCallBack={this.sumitForm} text="提交"/>
+        <Alert closeAlert={this.closePop} alertTip={this.state.alertTip} alertStatus={this.state.alertStatus}/>    
       </div>
     )
   }
@@ -127,6 +174,7 @@ export default connect(state => ({
 }),{
   saveFormData,
   saveImage,
-  clearData
+  clearData,
+  clearSelect
 }
 )(Home)

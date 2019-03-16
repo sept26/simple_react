@@ -41,6 +41,6 @@ import API from './../../api/api'
 // 清空选择
 export const clearSelect = () => {
   return {
-    type: pro.CLEARSELECTED
+    type: Production.CLEARSELECTED
   }
 }
