@@ -43,6 +43,9 @@ class header extends Component {
         {
           this.props.confirm && <NavLink to="/" exact className="header-link header-link-confim">确定</NavLink>
         }
+        {
+          this.props.place && <span></span>
+        }
         <ReactCSSTransitionGroup
           component={this.FirstChild}
           transitionName="nav"
