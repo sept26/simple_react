@@ -64,8 +64,6 @@ class Home extends Component {
       case 'name':
       break
       case 'phoneNo':
-        // 这地方的问题
-        // value = this.padStr(value.replace(/\D/g, ''), [3, 7], ' ', event.target);
         value = value.replace(/\D/g,'')
       break;
       default:;

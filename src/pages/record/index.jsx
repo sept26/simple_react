@@ -51,7 +51,7 @@ class Record extends React.Component {
             <NavLink to={`${this.props.match.path}/audited`} className="nav-link">待审核</NavLink>
             <NavLink to={`${this.props.match.path}/failed`} className="nav-link">未通过</NavLink>
           </nav>
-          <i className="nav-flag-bar" style={{left: this.state.flagBarPos}}></i>
+          <i className="nav-flag-bar" style={{'marginLeft': this.state.flagBarPos}}></i>
         </section>
         {
           // 子路由在父级配置
